@@ -585,3 +585,8 @@ h6,
   .slider.round:before {
     border-radius: 50%;
   }
+
+  .imgBurglar{
+    width: 80%;
+    object-fit: contain;
+  }

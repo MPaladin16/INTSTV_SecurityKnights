@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>SEO Master - SEO Agency Website Template</title>
+    <title>Security Knights</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -57,6 +57,11 @@
                 document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
                 document.getElementById("MoveCheckbox").checked = false;
            }
+
+           if(!document.getElementById("MoveCheckbox").checked && !document.getElementById("SoundCheckbox").checked){
+            
+                document.getElementById("CameraImg").innerHTML = "<img src=\"img/burglar.jpg\" class=\"imgBurglar\">";
+           }
        }
        
         function onConnect() {
@@ -85,7 +90,9 @@
        var message;
        function turnOffMoveSensor(){
 
-            if (document.getElementById("MoveCheckbox").checked){
+            
+
+            if (!(document.getElementById("MoveCheckbox").checked)){
 
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "MoveSensor";
@@ -100,12 +107,14 @@
                 message.retained=true;
                 mqtt.send(message);
 
+                console.log("Turning off move sensor");
+                document.getElementById("CameraImg").innerHTML = "";
             }
        }
 
        function turnOffSoundSensor(){
 
-        if (document.getElementById("SoundCheckbox").checked){
+        if (!(document.getElementById("SoundCheckbox").checked)){
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "SoundSensor";
             message.retained=true;
@@ -117,6 +126,8 @@
             message.retained=true;
             mqtt.send(message);
 
+            console.log("Turning off sound sensor");
+            document.getElementById("CameraImg").innerHTML = "";
         }
        }
     
@@ -197,12 +208,9 @@
                             <div class="service-icon flex-shrink-0">
                                 <i class="fa fa-camera fa-2x"></i>
                             </div>
-                            <h5 class="mb-3">CAMERA</h5>
-                            <p>COMING IN THE NEXT VERSION</p>
-                            <label class="switch midBtn">
-                                <input type="checkbox" disabled>
-                                <span class="slider round"></span>
-                              </label>
+                            <h5> CAMERA </h5>
+                              
+                            <p id="CameraImg"> </p>
                         </div>
                     </div> 
 
