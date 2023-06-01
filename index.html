@@ -49,21 +49,21 @@
            out_msg=out_msg+"Message received Topic "+msg.destinationName;
            console.log(out_msg);
 
-           if(msg.destinationName.contains("sound")){
-                document.getElementById("SoundText").innerHTML = msg.payloadString + "SENSOR ACTIVATED!";
-                document.getElementById("SoundCheckBox").checked = false;
+           if(msg.destinationName.contains("SoundSensorTopic")){
+                document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
+                document.getElementById("SoundCheckbox").checked = false;
            }
            else{
-                document.getElementById("MoveText").innerHTML = msg.payloadString + "SENSOR ACTIVATED!";
-                document.getElementById("MoveheckBox").checked = false;
+                document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
+                document.getElementById("MoveCheckbox").checked = false;
            }
        }
        
         function onConnect() {
    
        console.log("Connected ");
-       mqtt.subscribe("SoundSensor");
-       mqtt.subscrive("MoveSenstor");
+       mqtt.subscribe("SoundSensorTopic");
+       mqtt.subscrive("MoveSenstorTopic");
 
      }
      function MQTTconnect() {
@@ -85,7 +85,7 @@
        var message;
        function turnOffMoveSensor(){
 
-            if (document.getElementById("MoveheckBox").checked){
+            if (document.getElementById("MoveCheckbox").checked){
 
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "MoveSensor";
@@ -105,7 +105,7 @@
 
        function turnOffSoundSensor(){
 
-        if (document.getElementById("SoundheckBox").checked){
+        if (document.getElementById("SoundCheckbox").checked){
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "SoundSensor";
             message.retained=true;
@@ -177,20 +177,7 @@
                               </label>
                         </div>
                     </div>
-                    <!--
-                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
-                        <div class="service-item d-flex flex-column justify-content-center text-center rounded">
-                            <div class="service-icon flex-shrink-0">
-                                <i class="fa fa-camera fa-2x"></i>
-                            </div>
-                            <h5 class="mb-3">CAMERA</h5>
-                            <p>Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam stet diam sed stet lorem.</p>
-                            <label class="switch midBtn">
-                                <input type="checkbox">
-                                <span class="slider round"></span>
-                              </label>
-                        </div>
-                    </div> -->
+
                     <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
                         <div class="service-item d-flex flex-column justify-content-center text-center rounded">
                             <div class="service-icon flex-shrink-0">
@@ -204,6 +191,20 @@
                               </label>
                         </div>
                     </div>
+
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                        <div class="service-item d-flex flex-column justify-content-center text-center rounded">
+                            <div class="service-icon flex-shrink-0">
+                                <i class="fa fa-camera fa-2x"></i>
+                            </div>
+                            <h5 class="mb-3">CAMERA</h5>
+                            <p>COMING IN THE NEXT VERSION</p>
+                            <label class="switch midBtn">
+                                <input type="checkbox" disabled>
+                                <span class="slider round"></span>
+                              </label>
+                        </div>
+                    </div> 
 
                     </div>
                 </div>
