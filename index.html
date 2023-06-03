@@ -8,8 +8,6 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,12 +49,16 @@
            console.log(out_msg);
 
            if(msg.destinationName == "SoundSensorTopic"){
-                document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
+                document.getElementById("SoundText").innerHTML = "ALARM ACTIVATED!";
                 document.getElementById("SoundCheckbox").checked = false;
+                
+                AlertUser();
            }
            if (msg.destinationName == "MoveSensorTopic"){
                 document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
                 document.getElementById("MoveCheckbox").checked = false;
+
+                AlertUser();
            }
 
            if(!document.getElementById("MoveCheckbox").checked && !document.getElementById("SoundCheckbox").checked){
@@ -92,8 +94,6 @@
 
        var message;
        function turnOffMoveSensor(){
-
-            
 
             if (!(document.getElementById("MoveCheckbox").checked)){
 
@@ -295,6 +295,50 @@
         // document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
         document.getElementById("MoveCheckbox").checked = false;
        }
+
+       let perm = Notification.requestPermission();
+
+       console.log(perm);
+
+       function AlertUser(){
+       if(!window.Notification)
+    {
+      alert('Your system does not support notification');
+    }
+    else
+    {
+      if(Notification.permission==='granted')
+      {
+        var greeting1=new Notification("Notification",{
+              body:'ALARM TRIGERED!!!',
+              icon:"/img/warning.jpg"
+            })
+            greeting1.addEventListener("click",function(){
+              window.open("http://127.0.0.1:5500")
+            })
+      }
+      else
+      {
+        Notification.requestPermission().then(function(p)
+        {
+          console.log(p);
+          if(p==='granted')
+          {
+            // show notification
+            alert('hey permision taken')
+            var greeting=new Notification("Notification",{
+              body:'ALARM TRIGERED!!!',
+              icon:"/img/warning.jpg"
+            })
+            greeting.addEventListener("click",function(){
+                window.open("http://127.0.0.1:5500")
+            })
+          }
+        }
+        )
+      }
+    }
+}
     </script>
 </body>
 
