@@ -278,20 +278,21 @@
     <script>
         MQTTconnect();
         if(localStorage.getItem("sound")==1){
-        document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
+        document.getElementById("SoundText").innerHTML = "";
         document.getElementById("SoundCheckbox").checked = true;
        }
        else{
-        document.getElementById("SoundText").innerHTML = "";
+        
+        document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
         document.getElementById("SoundCheckbox").checked = false;
        }
 
        if(localStorage.getItem("move")==1){
-        document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
+        document.getElementById("MoveText").innerHTML = "";
         document.getElementById("MoveCheckbox").checked = true;
        }
        else{
-        document.getElementById("MoveText").innerHTML = "";
+        document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
         document.getElementById("MoveCheckbox").checked = false;
        }
     </script>
