@@ -102,6 +102,7 @@
             message.retained=false;
             mqttSend.send(message);
 
+            localStorage.setItem("move", 0);
             }
 
             else{
@@ -113,6 +114,7 @@
                 console.log("Turning off move sensor");
                 document.getElementById("CameraImg").innerHTML = "";
                 document.getElementById("MoveText").innerHTML = "";
+                localStorage.setItem("move", 1);
             }
        }
 
@@ -123,6 +125,7 @@
             message.destinationName = "SoundSensor";
             message.retained=false;
             mqttSend.send(message);
+            localStorage.setItem("sound", 0);
         }
         else{
             message = new Paho.MQTT.Message("Activate Sensor");
@@ -133,9 +136,28 @@
             console.log("Turning off sound sensor");
             document.getElementById("CameraImg").innerHTML = "";
             document.getElementById("SoundText").innerHTML = "";
+            localStorage.setItem("sound", 1);
         }
        }
-    
+       
+       if(localStorage.getItem("sound")==1){
+        document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
+        document.getElementById("SoundCheckbox").checked = true;
+       }
+       else{
+        document.getElementById("SoundText").innerHTML = "";
+        document.getElementById("SoundCheckbox").checked = false;
+       }
+
+       if(localStorage.getItem("move")==1){
+        document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
+        document.getElementById("MoveCheckbox").checked = true;
+       }
+       else{
+        document.getElementById("MoveText").innerHTML = "";
+        document.getElementById("MoveCheckbox").checked = false;
+       }
+
      </script>
 
 </head>
