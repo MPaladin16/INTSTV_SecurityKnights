@@ -77,7 +77,7 @@
        var x=Math.floor(Math.random() * 10000); 
        var cname="orderform-"+x;
        mqtt = new Paho.MQTT.Client(host,port,cname);
-       mqttSend = new Paho.MQTT.Client(host,portSend,cname);
+    //    mqttSend = new Paho.MQTT.Client(host,portSend,cname);
        var options = {
             // mqttVersion: 4,
             // transports: ["websockets"],
@@ -100,7 +100,7 @@
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "MoveSensor";
             message.retained=false;
-            mqttSend.send(message);
+            mqtt.send(message);
 
             localStorage.setItem("move", 0);
             }
@@ -109,9 +109,9 @@
                 message = new Paho.MQTT.Message("Activate Sensor");
                 message.destinationName = "MoveSensor";
                 message.retained=false;
-                mqttSend.send(message);
+                mqtt.send(message);
 
-                console.log("Turning off move sensor");
+                console.log("Turning on move sensor");
                 document.getElementById("CameraImg").innerHTML = "";
                 document.getElementById("MoveText").innerHTML = "";
                 localStorage.setItem("move", 1);
@@ -124,38 +124,20 @@
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "SoundSensor";
             message.retained=false;
-            mqttSend.send(message);
             localStorage.setItem("sound", 0);
+            mqtt.send(message);
         }
         else{
             message = new Paho.MQTT.Message("Activate Sensor");
             message.destinationName = "SoundSensor";
             message.retained=false;
-            mqttSend.send(message);
+            mqtt.send(message);
 
-            console.log("Turning off sound sensor");
+            console.log("Turning on sound sensor");
             document.getElementById("CameraImg").innerHTML = "";
             document.getElementById("SoundText").innerHTML = "";
             localStorage.setItem("sound", 1);
         }
-       }
-       
-       if(localStorage.getItem("sound")==1){
-        document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
-        document.getElementById("SoundCheckbox").checked = true;
-       }
-       else{
-        document.getElementById("SoundText").innerHTML = "";
-        document.getElementById("SoundCheckbox").checked = false;
-       }
-
-       if(localStorage.getItem("move")==1){
-        document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
-        document.getElementById("MoveCheckbox").checked = true;
-       }
-       else{
-        document.getElementById("MoveText").innerHTML = "";
-        document.getElementById("MoveCheckbox").checked = false;
        }
 
      </script>
@@ -295,6 +277,23 @@
 
     <script>
         MQTTconnect();
+        if(localStorage.getItem("sound")==1){
+        document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
+        document.getElementById("SoundCheckbox").checked = true;
+       }
+       else{
+        document.getElementById("SoundText").innerHTML = "";
+        document.getElementById("SoundCheckbox").checked = false;
+       }
+
+       if(localStorage.getItem("move")==1){
+        document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
+        document.getElementById("MoveCheckbox").checked = true;
+       }
+       else{
+        document.getElementById("MoveText").innerHTML = "";
+        document.getElementById("MoveCheckbox").checked = false;
+       }
     </script>
 </body>
 
