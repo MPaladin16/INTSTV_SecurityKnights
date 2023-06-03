@@ -95,6 +95,7 @@
        var message;
        function turnOffMoveSensor(){
 
+            //AlertUser();
             if (!(document.getElementById("MoveCheckbox").checked)){
 
             message = new Paho.MQTT.Message("Deactivate Sensor");
