@@ -36,8 +36,8 @@
     <script type = "text/javascript" language = "javascript">
        var mqtt;
        var reconnectTimeout = 10000;
-       var host="localhost";
-       var port=1883;
+       var host="192.168.8.101";
+       var port=9001;
        var out_msg;
        
        function onFailure(message) {
@@ -49,11 +49,11 @@
            out_msg=out_msg+"Message received Topic "+msg.destinationName;
            console.log(out_msg);
 
-           if(msg.destinationName.contains("SoundSensorTopic")){
+           if(msg.destinationName == "SoundSensorTopic"){
                 document.getElementById("SoundText").innerHTML = "SENSOR ACTIVATED!";
                 document.getElementById("SoundCheckbox").checked = false;
            }
-           else{
+           if (msg.destinationName == "MoveSensorTopic"){
                 document.getElementById("MoveText").innerHTML = "SENSOR ACTIVATED!";
                 document.getElementById("MoveCheckbox").checked = false;
            }
@@ -68,7 +68,7 @@
    
        console.log("Connected ");
        mqtt.subscribe("SoundSensorTopic");
-       mqtt.subscrive("MoveSensorTopic");
+       mqtt.subscribe("MoveSensorTopic");
 
      }
      function MQTTconnect() {
@@ -78,6 +78,8 @@
        mqtt = new Paho.MQTT.Client(host,port,cname);
 
        var options = {
+            // mqttVersion: 4,
+            // transports: ["websockets"],
            timeout: 3,
            onSuccess: onConnect,
            onFailure: onFailure,
@@ -96,7 +98,7 @@
 
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "MoveSensor";
-            message.retained=true;
+            message.retained=false;
             mqtt.send(message);
 
             }
@@ -104,7 +106,7 @@
             else{
                 message = new Paho.MQTT.Message("Activate Sensor");
                 message.destinationName = "MoveSensor";
-                message.retained=true;
+                message.retained=false;
                 mqtt.send(message);
 
                 console.log("Turning off move sensor");
@@ -117,13 +119,13 @@
         if (!(document.getElementById("SoundCheckbox").checked)){
             message = new Paho.MQTT.Message("Deactivate Sensor");
             message.destinationName = "SoundSensor";
-            message.retained=true;
+            message.retained=false;
             mqtt.send(message);
         }
         else{
             message = new Paho.MQTT.Message("Activate Sensor");
             message.destinationName = "SoundSensor";
-            message.retained=true;
+            message.retained=false;
             mqtt.send(message);
 
             console.log("Turning off sound sensor");
@@ -195,7 +197,7 @@
                                 <i class="fa fa-adjust fa-2x"></i>
                             </div>
                             <h5 class="mb-3">HOME Move Sensor</h5>
-                            <p id="MoveTExt" style="color:red"></p>
+                            <p id="MoveText" style="color:red"></p>
                             <label class="switch midBtn">
                                 <input type="checkbox" id="MoveCheckbox" onclick="turnOffMoveSensor()" checked>
                                 <span class="slider round"></span>
